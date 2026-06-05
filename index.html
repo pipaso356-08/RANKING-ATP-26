@@ -410,11 +410,6 @@ Muchamiel: "imagenes/mutxamiel.jpg",
 LoMoran: "imagenes/lomoran.jpg"
 };
 
-let datos = JSON.parse(localStorage.getItem("ATP_AMIGOS")) || {
-historial:[],
-ultimoRanking:{}
-};
-
 const clubSelect = document.getElementById("club");
 const pistaSelect = document.getElementById("pista");
 
@@ -458,16 +453,22 @@ f.appendChild(o2);
 
 }
 
-function guardar(){
-localStorage.setItem("ATP_AMIGOS", JSON.stringify(datos));
-}
-
 function crearClave(club,pista,j1,j2){
 let ord=[j1,j2].sort();
 return club+"-"+pista+"-"+ord[0]+"-"+ord[1];
 }
 
 function registrarPartido(){
+
+db.collection("partidos").add({
+    fecha: new Date().toLocaleString(),
+    club,
+    pista,
+    ganador,
+    finalista,
+    resultado,
+    clave: crearClave(club,pista,ganador,finalista)
+});
 
 const club = document.getElementById("club").value;
 const pista = document.getElementById("pista").value;
