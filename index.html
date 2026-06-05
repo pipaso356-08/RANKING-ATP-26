@@ -348,8 +348,23 @@ Modo torneo: <span id="modoTxt">Normal</span>
 
 <script>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+let datos = { historial: [], ultimoRanking: {} };
+
+function cargarDatos(){
+    db.collection("partidos").onSnapshot(snapshot => {
+
+        datos.historial = [];
+
+        snapshot.forEach(doc => {
+            datos.historial.unshift(doc.data());
+        });
+
+        actualizar();
+    });
+}
+
+src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"
+src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
