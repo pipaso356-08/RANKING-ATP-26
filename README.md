@@ -277,12 +277,12 @@ img{
 <body>
 
 <div class="bannerSuperior">
-    <img src="img/banner-atp.png" alt="ATP Banner">
+    <img src="banner-atp.png" alt="ATP Banner">
 </div>
 
 <h1 class="logoTitulo">
-    <img src="img/pif.jpg" alt="PIF">
-    <img src="img/atp.jpg" alt="ATP">
+    <img src="pif.jpg" alt="PIF">
+    <img src="atp.jpg" alt="ATP">
 </h1>
 
 <div class="card">
