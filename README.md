@@ -1,2 +1,695 @@
 # RANKING-ATP-26
 Esto es un ranking de tenis  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATP Amigos</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#eef2f7;
+    padding:20px;
+    color:#1a1a1a;
+}
+
+
+
+h1{
+    color:#0a2c6b;
+    margin-bottom:20px;
+    font-size:42px;
+}
+
+.bannerSuperior{
+    width:103%;
+    margin:-20px -20px 20px -20px;
+}
+
+.bannerSuperior img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:0;
+    margin:0;
+    max-width:none;
+}
+
+.logoTitulo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:100px;
+    margin-bottom:50px;
+}
+
+.logoTitulo img{
+    height:150px;
+    width:auto;
+    margin:0;
+    border-radius:0;
+}
+
+h2{
+    margin-bottom:15px;
+    color:#0a2c6b;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:14px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    margin:5px;
+    background:white;
+}
+
+button{
+    padding:10px 14px;
+    margin:5px;
+    border:none;
+    border-radius:6px;
+    background:#1e88e5;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    background:#1565c0;
+}
+
+img{
+    max-width:320px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+#ranking{
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:12px;
+    table-layout:fixed;
+}
+
+#ranking th{
+    background:#0a2c6b;
+    color:white;
+    padding:14px;
+    font-size:15px;
+    text-transform:uppercase;
+}
+
+#ranking td{
+    padding:16px;
+    border-bottom:1px solid #dfe5ec;
+    text-align:center;
+    vertical-align:middle;
+}
+
+#ranking td{
+    padding:16px;
+    border-bottom:1px solid #dfe5ec;
+    text-align:center;
+    vertical-align:middle;
+}
+
+#ranking th{
+    text-align:center;
+}
+
+#ranking{
+    table-layout:fixed;
+}
+
+#ranking tr:nth-child(even){
+    background:#f8fafc;
+}
+
+#ranking tr:hover{
+    background:#eaf4ff;
+}
+
+.rank{
+    font-size:28px;
+    font-weight:bold;
+    color:#0a2c6b;
+    width:70px;
+}
+
+.col-bandera{
+    width:70px;
+}
+
+.col-jugador{
+    width:220px;
+}
+
+.col-edad{
+    width:90px;
+}
+
+.col-partidos{
+    width:120px;
+}
+
+.col-puntos{
+    width:150px;
+}
+
+.col-diff{
+    width:100px;
+}
+
+.jugador{
+    font-size:22px;
+    font-weight:700;
+    text-align:left;
+    padding-left:15px;
+    color:#202124;
+}
+
+.subida{
+    color:#1aa34a;
+    font-weight:bold;
+}
+
+.bajada{
+    color:#d62828;
+    font-weight:bold;
+}
+
+.neutro{
+    color:#666;
+}
+
+#stats{
+    width:100%;
+    border-collapse:collapse;
+}
+
+#stats th{
+    background:#0a2c6b;
+    color:white;
+    padding:12px;
+}
+
+#stats td{
+    border:1px solid #ddd;
+    padding:10px;
+}
+
+#stats tr:nth-child(even){
+    background:#f8fafc;
+}
+
+#historial{
+    max-height:300px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:10px;
+}
+
+#historial p{
+    padding:8px;
+    border-bottom:1px solid #eee;
+}
+
+#historial p:last-child{
+    border-bottom:none;
+}
+
+.oro{
+    color:#d4af37;
+    font-weight:bold;
+}
+
+.plata{
+    color:#a8a8a8;
+    font-weight:bold;
+}
+
+.bronce{
+    color:#cd7f32;
+    font-weight:bold;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:30px;
+    }
+
+    .jugador{
+        font-size:16px;
+    }
+
+    .rank{
+        font-size:20px;
+    }
+
+    #ranking td,
+    #ranking th{
+        padding:8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bannerSuperior">
+    <img src="img/banner-atp.png" alt="ATP Banner">
+</div>
+
+<h1 class="logoTitulo">
+    <img src="img/pif.jpg" alt="PIF">
+    <img src="img/atp.jpg" alt="ATP">
+</h1>
+
+<div class="card">
+
+<h2>Registrar Partido</h2>
+
+<select id="club">
+<option value="Montemar">Montemar</option>
+<option value="Muchamiel">Mutxamiel</option>
+<option value="LoMoran">Lo Morán</option>
+</select>
+
+<select id="pista"></select>
+
+<select id="ganador"></select>
+
+<select id="finalista"></select>
+
+<select id="resultado">
+    <option value="victoria">Victoria</option>
+    <option value="empate">Empate</option>
+</select>
+
+<button onclick="registrarPartido()">Guardar Partido</button>
+
+<button onclick="cambiarModo()">
+Modo torneo: <span id="modoTxt">Normal</span>
+</button>
+
+<div>
+<img id="imgPista" style="display:none; max-width:320px; margin-top:10px;">
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🏆 Ranking</h2>
+
+<table id="ranking"></table>
+
+</div>
+
+<div class="card">
+
+<h2>📊 Estadísticas</h2>
+
+<table id="stats"></table>
+
+</div>
+
+<div class="card">
+
+<h2>📜 Historial</h2>
+
+<div id="historial"></div>
+
+</div>
+
+<div class="card">
+
+<button onclick="nuevaTemporada()">🔄 Reiniciar temporada</button>
+
+</div>
+
+<script>
+
+const jugadores = ["Cristian","David","Eric","Kevin"];
+
+const edades = {
+Cristian:17,
+David:14,
+Eric:15,
+Kevin:13
+};
+
+let modoTorneo = "normal";
+
+const puntosPista = {
+
+Montemar:{
+1:1000,2:900,3:800,4:700,5:600,6:500,7:450,
+8:400,9:350,
+10:300,11:250,12:250,13:250,
+14:300,15:300,
+16:250,17:250,18:250,19:250,20:250,21:250
+},
+
+Muchamiel:{
+1:500,2:500,3:450,4:450
+},
+
+LoMoran:{
+1:400,2:350
+}
+
+};
+
+const imagenesPista = {
+Montemar: "img/montemar.png",
+Muchamiel: "img/mutxamiel.jpg",
+LoMoran: "img/lomoran.jpg"
+};
+
+let datos = JSON.parse(localStorage.getItem("ATP_AMIGOS")) || {
+historial:[],
+ultimoRanking:{}
+};
+
+const clubSelect = document.getElementById("club");
+const pistaSelect = document.getElementById("pista");
+
+function cargarPistas(){
+
+const club = clubSelect.value;
+pistaSelect.innerHTML = "";
+
+Object.keys(puntosPista[club]).forEach(p=>{
+
+let option = document.createElement("option");
+option.value = p;
+option.textContent = "Pista " + p + " (" + puntosPista[club][p] + " pts)";
+pistaSelect.appendChild(option);
+
+});
+
+document.getElementById("imgPista").src = imagenesPista[club];
+document.getElementById("imgPista").style.display = "block";
+
+}
+
+clubSelect.addEventListener("change", cargarPistas);
+
+function cargarJugadores(){
+
+const g = document.getElementById("ganador");
+const f = document.getElementById("finalista");
+
+jugadores.forEach(j=>{
+
+let o1 = document.createElement("option");
+o1.value=j; o1.textContent=j;
+g.appendChild(o1);
+
+let o2 = document.createElement("option");
+o2.value=j; o2.textContent=j;
+f.appendChild(o2);
+
+});
+
+}
+
+function guardar(){
+localStorage.setItem("ATP_AMIGOS", JSON.stringify(datos));
+}
+
+function crearClave(club,pista,j1,j2){
+let ord=[j1,j2].sort();
+return club+"-"+pista+"-"+ord[0]+"-"+ord[1];
+}
+
+function registrarPartido(){
+
+const club = document.getElementById("club").value;
+const pista = document.getElementById("pista").value;
+const ganador = document.getElementById("ganador").value;
+const finalista = document.getElementById("finalista").value;
+const resultado = document.getElementById("resultado").value;
+
+if(ganador===finalista){
+alert("No pueden ser iguales");
+return;
+}
+
+const clave = crearClave(club,pista,ganador,finalista);
+
+// 🔥 buscar anterior
+let anterior = datos.historial.find(p=>p.clave===clave);
+
+// 🔥 eliminar anterior (defensa de puntos)
+datos.historial = datos.historial.filter(p=>p.clave!==clave);
+
+datos.historial.unshift({
+fecha:new Date().toLocaleString(),
+club,
+pista,
+ganador,
+finalista,
+resultado,
+clave,
+anterior
+});
+
+guardar();
+actualizar();
+
+}
+
+function calcularRanking(){
+
+let ranking={};
+let stats={};
+let perdidas={};
+
+jugadores.forEach(j=>{
+ranking[j]=0;
+stats[j]={victorias:0, finales:0};
+});
+
+// 🔥 solo últimos resultados
+let usados={};
+
+datos.historial.forEach(p=>{
+
+let puntos = puntosPista[p.club][p.pista];
+
+if(modoTorneo==="grandSlam"){
+puntos*=2;
+}
+
+usados[p.clave]={
+ganador:p.ganador,
+finalista:p.finalista,
+resultado:p.resultado,
+puntos,
+anterior:p.anterior
+};
+
+});
+
+// sumar solo válidos
+Object.values(usados).forEach(p=>{
+
+if(p.resultado==="empate"){
+
+    ranking[p.ganador]+=Math.round(p.puntos*0.5);
+    ranking[p.finalista]+=Math.round(p.puntos*0.5);
+
+}else{
+
+    ranking[p.ganador]+=p.puntos;
+    ranking[p.finalista]+=Math.round(p.puntos*0.6);
+
+    stats[p.ganador].victorias++;
+    stats[p.finalista].finales++;
+
+}
+
+});
+
+// 🔴 calcular pérdidas
+Object.values(usados).forEach(p=>{
+
+if(p.anterior){
+
+let diff = p.puntos - (p.anterior.puntos || p.puntos);
+
+if(diff<0){
+perdidas[p.ganador]=diff;
+}
+
+}
+
+});
+
+return {ranking,stats,perdidas};
+
+}
+
+function actualizar(){
+
+const r = calcularRanking();
+
+let cambios = {};
+
+jugadores.forEach(j=>{
+
+let anterior = datos.ultimoRanking?.[j] || 0;
+let actual = r.ranking[j] || 0;
+
+cambios[j] = actual - anterior;
+
+});
+
+let arr=Object.entries(r.ranking).sort((a,b)=>b[1]-a[1]);
+
+let html=`
+<tr>
+<th>Ranking</th>
+<th></th>
+<th>Jugador</th>
+<th>Edad</th>
+<th>Partidos</th>
+<th>Puntos</th>
+<th>+/-</th>
+</tr>
+`;
+
+arr.forEach((j,i)=>{
+
+let diff = cambios[j[0]] || 0;
+
+let clase="neutro";
+
+if(diff>0) clase="subida";
+if(diff<0) clase="bajada";
+
+let partidos =
+r.stats[j[0]].victorias +
+r.stats[j[0]].finales;
+
+html += `
+<tr>
+
+<td class="rank">
+${i+1}
+</td>
+
+<td style="text-align:center;">
+<img
+src="img/spain.jpg"
+style="
+width:32px;
+height:22px;
+object-fit:cover;
+border-radius:3px;
+display:block;
+margin:auto;
+">
+</td>
+
+<td class="jugador">
+${j[0]}
+</td>
+
+<td>
+${edades[j[0]]}
+</td>
+
+<td>
+${partidos}
+</td>
+
+<td>
+<b>${j[1]}</b>
+</td>
+
+<td class="${clase}">
+${diff === 0 ? "-" : (diff > 0 ? "+" : "") + diff}
+</td>
+
+</tr>
+`;
+});
+
+document.getElementById("ranking").innerHTML=html;
+
+let st=`<tr><th>Jugador</th><th>Victorias</th><th>Finales</th></tr>`;
+
+jugadores.forEach(j=>{
+st+=`<tr><td>${j}</td><td>${r.stats[j].victorias}</td><td>${r.stats[j].finales}</td></tr>`;
+});
+
+document.getElementById("stats").innerHTML=st;
+
+let h="";
+
+datos.historial.forEach(x=>{
+h+=`<p>${x.fecha} | ${x.club} | Pista ${x.pista} | 🏆 ${x.ganador} | 🥈 ${x.finalista}</p>`;
+});
+
+document.getElementById("historial").innerHTML=h;
+
+datos.ultimoRanking = {...r.ranking};
+guardar();
+
+}
+
+function cambiarModo(){
+
+if(modoTorneo==="normal"){
+modoTorneo="grandSlam";
+document.getElementById("modoTxt").innerText="Grand Slam 🔥";
+}else{
+modoTorneo="normal";
+document.getElementById("modoTxt").innerText="Normal";
+}
+
+}
+
+function nuevaTemporada(){
+
+if(confirm("¿Seguro?")){
+
+datos={historial:[]};
+localStorage.setItem("ATP_AMIGOS",JSON.stringify(datos));
+actualizar();
+
+}
+
+}
+
+cargarPistas();
+cargarJugadores();
+actualizar();
+
+</script>
+
+</body>
+</html>
