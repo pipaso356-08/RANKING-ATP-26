@@ -1,5 +1,3 @@
-# RANKING-ATP-26
-Esto es un ranking de tenis  
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -277,12 +275,12 @@ img{
 <body>
 
 <div class="bannerSuperior">
-    <img src="banner-atp.png" alt="ATP Banner">
+    <img src="img/banner-atp.png" alt="ATP Banner">
 </div>
 
 <h1 class="logoTitulo">
-    <img src="pif.jpg" alt="PIF">
-    <img src="atp.jpg" alt="ATP">
+    <img src="img/pif.jpg" alt="PIF">
+    <img src="img/atp.jpg" alt="ATP">
 </h1>
 
 <div class="card">
