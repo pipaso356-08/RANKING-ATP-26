@@ -279,7 +279,7 @@ img{
 </div>
 
 <h1 class="logoTitulo">
-    <img src="https://mma.prnewswire.com/media/2350063/PIF.jpg?p=twitter" alt="PIF">
+    <img src="https://mma.prnewswire.com/media/2350063/PIF.jpg?w=400" alt="PIF">
     <img src="img/atp.jpg" alt="ATP">
 </h1>
 
