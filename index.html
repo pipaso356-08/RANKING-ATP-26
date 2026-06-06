@@ -427,8 +427,15 @@ let datos = {
 };
 
 async function cargarDatos() {
-  const res = await fetch("https://raw.githubusercontent.com/pipaso356-08/RANKING-ATP-26/main/datos.json");
-  datos = await res.json();
+  try{
+      const res = await fetch("https://raw.githubusercontent.com/pipaso356-08/RANKING-ATP-26/main/datos.json");
+      datos = await res.json();
+  }catch(e){
+      datos = {
+          historial: [],
+          ultimoRanking: {}
+      };
+  }
   actualizar();
 }
 
@@ -717,10 +724,13 @@ function nuevaTemporada(){
 
 if(confirm("¿Seguro?")){
 
-datos={historial:[]};
-localStorage.setItem("ATP_AMIGOS",JSON.stringify(datos));
-actualizar();
+datos = {
+    historial: [],
+    ultimoRanking: {}
+};
 
+guardar();
+actualizar();
 }
 
 }
