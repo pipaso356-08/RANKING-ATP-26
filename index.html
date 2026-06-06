@@ -348,6 +348,42 @@ Modo torneo: <span id="modoTxt">Normal</span>
 
 <script>
 
+cargarDatos();
+
+async function guardarEnGitHub() {
+    const token = "TU_TOKEN_AQUI";
+
+    const url = "https://api.github.com/repos/pipaso356-08/RANKING-ATP-26/contents/datos.json";
+
+    // 1. obtener SHA actual del archivo
+    const getFile = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    const fileData = await getFile.json();
+
+    // 2. convertir datos a base64
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(datos, null, 2))));
+
+    // 3. actualizar archivo
+    await fetch(url, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: "update ranking ATP",
+            content: content,
+            sha: fileData.sha
+        })
+    });
+
+    console.log("Guardado en GitHub ✔");
+}
+
 const jugadores = ["Cristian","David","Eric","Kevin"];
 
 const edades = {
@@ -385,10 +421,16 @@ Muchamiel: "imagenes/mutxamiel.jpg",
 LoMoran: "imagenes/lomoran.jpg"
 };
 
-let datos = JSON.parse(localStorage.getItem("ATP_AMIGOS")) || {
-historial:[],
-ultimoRanking:{}
+let datos = {
+  historial: [],
+  ultimoRanking: {}
 };
+
+async function cargarDatos() {
+  const res = await fetch("https://raw.githubusercontent.com/pipaso356-08/RANKING-ATP-26/main/datos.json");
+  datos = await res.json();
+  actualizar();
+}
 
 const clubSelect = document.getElementById("club");
 const pistaSelect = document.getElementById("pista");
@@ -434,7 +476,7 @@ f.appendChild(o2);
 }
 
 function guardar(){
-localStorage.setItem("ATP_AMIGOS", JSON.stringify(datos));
+    guardarEnGitHub();
 }
 
 function crearClave(club,pista,j1,j2){
@@ -685,7 +727,7 @@ actualizar();
 
 cargarPistas();
 cargarJugadores();
-actualizar();
+cargarDatos();
 
 </script>
 
