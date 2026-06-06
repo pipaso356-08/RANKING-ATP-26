@@ -275,12 +275,12 @@ img{
 <body>
 
 <div class="bannerSuperior">
-    <img src="imagenes/banner-atp.jpg" alt="ATP Banner">
+    <img src="imagen/banner-atp.png" alt="ATP Banner">
 </div>
 
 <h1 class="logoTitulo">
-    <img src="imagenes/pif.jpg" alt="PIF">
-    <img src="imagenes/atp.jpg" alt="ATP">
+    <img src="imagen/pif.jpg" alt="PIF">
+    <img src="imagen/atp.jpg" alt="ATP">
 </h1>
 
 <div class="card">
@@ -348,46 +348,6 @@ Modo torneo: <span id="modoTxt">Normal</span>
 
 <script>
 
-let datos = { historial: [], ultimoRanking: {} };
-
-function cargarDatos(){
-    db.collection("partidos").onSnapshot(snapshot => {
-
-        datos.historial = [];
-
-        snapshot.forEach(doc => {
-            datos.historial.unshift(doc.data());
-        });
-
-        actualizar();
-    });
-}
-
-src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"
-src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDhbhki401s-iPV2j1X17OEiUjMCaBR8W4",
-  authDomain: "atp-ranking-26.firebaseapp.com",
-  projectId: "atp-ranking-26",
-  storageBucket: "atp-ranking-26.firebasestorage.app",
-  messagingSenderId: "342984299171",
-  appId: "1:342984299171:web:b476b1bf86550f7ab8a516",
-  measurementId: "G-N1T0JLYS12"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
 const jugadores = ["Cristian","David","Eric","Kevin"];
 
 const edades = {
@@ -420,9 +380,14 @@ LoMoran:{
 };
 
 const imagenesPista = {
-Montemar: "imagenes/montemar.jpg",
-Muchamiel: "imagenes/mutxamiel.jpg",
-LoMoran: "imagenes/lomoran.jpg"
+Montemar: "imagen/montemar.png",
+Muchamiel: "imagen/mutxamiel.jpg",
+LoMoran: "imagen/lomoran.jpg"
+};
+
+let datos = JSON.parse(localStorage.getItem("ATP_AMIGOS")) || {
+historial:[],
+ultimoRanking:{}
 };
 
 const clubSelect = document.getElementById("club");
@@ -468,22 +433,16 @@ f.appendChild(o2);
 
 }
 
+function guardar(){
+localStorage.setItem("ATP_AMIGOS", JSON.stringify(datos));
+}
+
 function crearClave(club,pista,j1,j2){
 let ord=[j1,j2].sort();
 return club+"-"+pista+"-"+ord[0]+"-"+ord[1];
 }
 
 function registrarPartido(){
-
-db.collection("partidos").add({
-    fecha: new Date().toLocaleString(),
-    club,
-    pista,
-    ganador,
-    finalista,
-    resultado,
-    clave: crearClave(club,pista,ganador,finalista)
-});
 
 const club = document.getElementById("club").value;
 const pista = document.getElementById("pista").value;
@@ -640,7 +599,18 @@ html += `
 ${i+1}
 </td>
 
-<td style="text-align:center;"><img src="imagenes/españa.png" style="width:32px;height:22px;object-fit:cover;border-radius:3px;display:block;margin:auto;"></td>
+<td style="text-align:center;">
+<img
+src="imagen/spain.jpg"
+style="
+width:32px;
+height:22px;
+object-fit:cover;
+border-radius:3px;
+display:block;
+margin:auto;
+">
+</td>
 
 <td class="jugador">
 ${j[0]}
