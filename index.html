@@ -6,11 +6,15 @@
 <title>ATP Amigos</title>
 
 <script type="module">
-  // Importar Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+  import {
+    getDatabase,
+    ref,
+    set,
+    get
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
 
-  // Configuración de Firebase
+  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyCdYOCcWTwIBlzjLNH88vytpXZGlXSHHZY",
     authDomain: "atp-26.firebaseapp.com",
@@ -22,11 +26,42 @@
     measurementId: "G-ZDR5FYY9FL"
   };
 
-  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-  // Analytics (opcional)
-  const analytics = getAnalytics(app);
+  // -------------------------
+  // DATOS GLOBAL (ANTES localStorage)
+  // -------------------------
+  let datos = {
+    historial: [],
+    ultimoRanking: {}
+  };
+
+  // -------------------------
+  // GUARDAR EN FIREBASE
+  // -------------------------
+  function guardarFirebase() {
+    set(ref(db, "ATP_AMIGOS"), datos);
+  }
+
+  // -------------------------
+  // CARGAR DESDE FIREBASE
+  // -------------------------
+  async function cargarFirebase() {
+    const snapshot = await get(ref(db, "ATP_AMIGOS"));
+
+    if (snapshot.exists()) {
+      datos = snapshot.val();
+    }
+
+    actualizar();
+  }
+
+  // -------------------------
+  // HACER FUNCIONES GLOBALES
+  // -------------------------
+  window.guardarFirebase = guardarFirebase;
+  window.cargarFirebase = cargarFirebase;
 </script>
 
 <style>
