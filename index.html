@@ -5,6 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ATP Amigos</title>
 
+<script type="module">
+  // Importar Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+
+  // Configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdYOCcWTwIBlzjLNH88vytpXZGlXSHHZY",
+    authDomain: "atp-26.firebaseapp.com",
+    databaseURL: "https://atp-26-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "atp-26",
+    storageBucket: "atp-26.firebasestorage.app",
+    messagingSenderId: "1017817883677",
+    appId: "1:1017817883677:web:14b59498157167620cd2f4",
+    measurementId: "G-ZDR5FYY9FL"
+  };
+
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Analytics (opcional)
+  const analytics = getAnalytics(app);
+</script>
+
 <style>
 *{
     margin:0;
