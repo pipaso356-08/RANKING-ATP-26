@@ -5,65 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ATP Amigos</title>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import {
-    getDatabase,
-    ref,
-    set,
-    get
-  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
-
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyCdYOCcWTwIBlzjLNH88vytpXZGlXSHHZY",
-    authDomain: "atp-26.firebaseapp.com",
-    databaseURL: "https://atp-26-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "atp-26",
-    storageBucket: "atp-26.firebasestorage.app",
-    messagingSenderId: "1017817883677",
-    appId: "1:1017817883677:web:14b59498157167620cd2f4",
-    measurementId: "G-ZDR5FYY9FL"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // -------------------------
-  // DATOS GLOBAL (ANTES localStorage)
-  // -------------------------
-  let datos = {
-    historial: [],
-    ultimoRanking: {}
-  };
-
-  // -------------------------
-  // GUARDAR EN FIREBASE
-  // -------------------------
-  function guardarFirebase() {
-    set(ref(db, "ATP_AMIGOS"), datos);
-  }
-
-  // -------------------------
-  // CARGAR DESDE FIREBASE
-  // -------------------------
-  async function cargarFirebase() {
-    const snapshot = await get(ref(db, "ATP_AMIGOS"));
-
-    if (snapshot.exists()) {
-      datos = snapshot.val();
-    }
-
-    actualizar();
-  }
-
-  // -------------------------
-  // HACER FUNCIONES GLOBALES
-  // -------------------------
-  window.guardarFirebase = guardarFirebase;
-  window.cargarFirebase = cargarFirebase;
-</script>
-
 <style>
 *{
     margin:0;
@@ -439,9 +380,14 @@ LoMoran:{
 };
 
 const imagenesPista = {
-Montemar: "imagenes/montemar.jpg",
+Montemar: "imagenesg/montemar.jpg",
 Muchamiel: "imagenes/mutxamiel.jpg",
 LoMoran: "imagenes/lomoran.jpg"
+};
+
+let datos = JSON.parse(localStorage.getItem("ATP_AMIGOS")) || {
+historial:[],
+ultimoRanking:{}
 };
 
 const clubSelect = document.getElementById("club");
@@ -485,6 +431,10 @@ f.appendChild(o2);
 
 });
 
+}
+
+function guardar(){
+localStorage.setItem("ATP_AMIGOS", JSON.stringify(datos));
 }
 
 function crearClave(club,pista,j1,j2){
@@ -726,6 +676,7 @@ function nuevaTemporada(){
 if(confirm("¿Seguro?")){
 
 datos={historial:[]};
+localStorage.setItem("ATP_AMIGOS",JSON.stringify(datos));
 actualizar();
 
 }
